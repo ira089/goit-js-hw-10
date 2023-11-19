@@ -1,9 +1,9 @@
 import axios from 'axios';
 //   axios.defaults.headers.common['x-api-key'] =
 // 'live_oco9x8YMDUogCKhdS7HWndmzEKKtYDTxBCgIu1bWIuyFPmWOKJqUYmA2eIrffrNG';
-const BREED_URL = ' https://api.thecatapi.com/v1/breeds';
-const BREED_ID_URL =
-  'https://api.thecatapi.com/v1/images/search?breed_ids=beng';
+const BREED_URL = ' https://api.thecatapi.com/v1';
+// const BREED_ID_URL =
+//   'https://api.thecatapi.com/v1/images/search?breed_ids=beng';
 
 // https://api.thecatapi.com/v1/images/search?breed_ids=${elId}
 const API_KEY =
@@ -14,7 +14,7 @@ const options = {
   },
 };
 export const funFetchBreeds = function fetchBreeds() {
-  return fetch(BREED_URL, options).then(resp => {
+  return fetch(`${BREED_URL}/breeds`, options).then(resp => {
     if (!resp.ok) {
       throw new Error(resp.statusText);
     }
@@ -23,11 +23,13 @@ export const funFetchBreeds = function fetchBreeds() {
 };
 
 export const funFetchCatByBreed = function fetchCatByBreed(breedId) {
-  return fetch(BREED_ID_URL, options).then(resp => {
-    if (!resp.ok) {
-      throw new Error(resp.statusText);
+  return fetch(`${BREED_URL}/images/search?breed_ids=${breedId}`, options).then(
+    resp => {
+      if (!resp.ok) {
+        throw new Error(resp.statusText);
+      }
+      return resp.json();
     }
-    return resp.json();
-  });
+  );
 };
 // https://api.thecatapi.com/v1/images/search?breed_ids={breed.id}

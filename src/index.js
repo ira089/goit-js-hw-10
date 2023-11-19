@@ -1,4 +1,4 @@
-console.log('чаокаокащ');
+console.log('чаокаока');
 import { funFetchBreeds } from './cat-api';
 import { funFetchCatByBreed } from './cat-api';
 import axios from 'axios';
@@ -9,6 +9,7 @@ const refs = {
   selectCheck: document.querySelector('.breed-select'),
   loadingData: document.querySelector('.loader'),
   errData: document.querySelector('.error'),
+  container: document.querySelector('.cat-info'),
 };
 console.dir(refs.selectCheck);
 refs.selectCheck.addEventListener('change', onChange);
@@ -24,7 +25,10 @@ console.log(funFetchBreeds());
 
 funFetchBreeds()
   .then(data => {
-    // console.log(data);
+    console.dir(...data);
+    console.dir({ ...data });
+    // console.log({ ...data.name });
+
     dataImg = data.filter(img => img.image?.url != null);
 
     // console.log(dataImg);
@@ -45,8 +49,8 @@ funFetchBreeds()
   .catch(error => console.log(error));
 
 console.log(funFetchCatByBreed());
-
-funFetchCatByBreed().then(dataQ => {
+const beng = 'beng';
+funFetchCatByBreed(beng).then(dataQ => {
   console.log(dataQ);
   //   console.log(dataQ.breeds);
 });
@@ -60,17 +64,27 @@ function showFirstBreed() {}
 
 // function createMarkup(arr) {
 //   return arr
-//     .map(
-//       ({ poster_path, release_date, original_title, vote_average }) => `
-//              <div class="cat-info">
-//                <img src="https://image.tmdb.org/t/p/w300${poster_path}" alt="${original_title}" />
+//     .map(      ( poster_path, release_date, original_title, vote_average )  => `
+//              <img src="https://image.tmdb.org/t/p/w300${poster_path}" alt="${original_title}" />
 //                <div class="cat-info-text">
 //                   <h2>${original_title}</h2>
 //                  <p> ${release_date}</p>
 //                   <h3> ${vote_average}</h3>
 //                   <p> ${release_date}</p>
 //                </div>
-//               </div>`
-//     )
-//     .join('');
-// }
+
+//     )    .join('');
+//     }
+function createMarkup(arr) {
+  return arr
+    .map(
+      () => `<img src="https://api.thecatapi.com/v1/images/search?breed_ids=${catId}" alt="${name}" />
+                  <div class="cat-info-text">
+                   <h2>${name}</h2>
+                  <p> ${description}</p>
+                    <h3>Temperament</h3>
+                    <p> ${temperament}</p>
+               </div>`
+    )
+    .join('');
+}
