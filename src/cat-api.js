@@ -1,11 +1,8 @@
 import axios from 'axios';
 //   axios.defaults.headers.common['x-api-key'] =
 // 'live_oco9x8YMDUogCKhdS7HWndmzEKKtYDTxBCgIu1bWIuyFPmWOKJqUYmA2eIrffrNG';
-const BREED_URL = ' https://api.thecatapi.com/v1';
-// const BREED_ID_URL =
-//   'https://api.thecatapi.com/v1/images/search?breed_ids=beng';
 
-// https://api.thecatapi.com/v1/images/search?breed_ids=${elId}
+const BREED_URL = ' https://api.thecatapi.com/v1';
 const API_KEY =
   'live_oco9x8YMDUogCKhdS7HWndmzEKKtYDTxBCgIu1bWIuyFPmWOKJqUYmA2eIrffrNG';
 const options = {
@@ -32,4 +29,3 @@ export const funFetchCatByBreed = function fetchCatByBreed(breedId) {
     }
   );
 };
-// https://api.thecatapi.com/v1/images/search?breed_ids={breed.id}

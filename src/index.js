@@ -1,9 +1,6 @@
-console.log('чаокаока');
 import { funFetchBreeds } from './cat-api';
 import { funFetchCatByBreed } from './cat-api';
 import axios from 'axios';
-
-// let arrBreeds = [];
 
 const refs = {
   selectCheck: document.querySelector('.breed-select'),
@@ -11,27 +8,33 @@ const refs = {
   errData: document.querySelector('.error'),
   container: document.querySelector('.cat-info'),
 };
-console.dir(refs.selectCheck);
+
 refs.selectCheck.addEventListener('change', onChange);
 
 function onChange(evt) {
-  // console.log({ evt });
+  refs.loadingData.classList.remove('display-none');
+  refs.selectCheck.classList.add('display-none');
+  refs.container.classList.add('display-none');
 
   const selectedId = evt.currentTarget.value;
-  console.log(selectedId);
+  // console.log(selectedId);
 
-  funFetchCatByBreed(selectedId).then(data => {
-    console.log(data);
-    refs.container.innerHTML = createMarkup(data);
-  });
+  funFetchCatByBreed(selectedId)
+    .then(data => {
+      console.log(data);
+      refs.container.innerHTML = createMarkup(data);
+    })
+    .catch(error => refs.errData.classList.remove('display-none'))
+    .finally(() => {
+      refs.loadingData.classList.add('display-none');
+      refs.selectCheck.classList.remove('display-none');
+      refs.container.classList.remove('display-none');
+    });
 }
-
-console.log(funFetchBreeds());
 
 funFetchBreeds()
   .then(data => {
-    console.dir(...data);
-    console.dir({ data });
+    // console.dir({ data });
     dataImg = data.filter(img => img.image?.url != null);
     for (let i = 0; i < dataImg.length; i++) {
       const breed = dataImg[i];
@@ -43,27 +46,8 @@ funFetchBreeds()
       option.innerHTML = breed.name;
       refs.selectCheck.append(option);
     }
-
-    // console.log(dataImg);
-
-    showFirstBreed(0);
-    //написать функцию - показывать первую породу по умолчанию
   })
-  .catch(error => console.log(error));
-
-console.log(funFetchCatByBreed());
-const beng = 'beng';
-funFetchCatByBreed(beng).then(dataQ => {
-  console.log(dataQ);
-  //   console.log(dataQ.breeds);
-});
-
-function showFirstBreed() {}
-
-// function showBreedImage(index) {}
-
-// let imgCat = dataImg[index].image.url;
-// console.log(imgCat);
+  .catch(error => refs.errData.classList.remove('display-none'));
 
 function createMarkup(arr) {
   const breeds = arr[0].breeds;
@@ -74,8 +58,7 @@ function createMarkup(arr) {
         name,
         temperament,
         description,
-        id,
-      }) => `<img src="${imageUrl}" alt="${name}" />
+      }) => `<img src="${imageUrl}" alt="${name}"/>
                   <div class="cat-info-text">
                    <h2>${name}</h2>
                   <p> ${description}</p>
