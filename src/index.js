@@ -34,7 +34,7 @@ function onChange(evt) {
 
 funFetchBreeds()
   .then(data => {
-    // console.dir({ data });
+    console.log('qwe');
     dataImg = data.filter(img => img.image?.url != null);
     for (let i = 0; i < dataImg.length; i++) {
       const breed = dataImg[i];
