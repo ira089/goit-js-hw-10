@@ -1,14 +1,20 @@
 import { funFetchBreeds } from './cat-api';
 import { funFetchCatByBreed } from './cat-api';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+// import SlimSelect from 'slim-select';
+
 // import axios from 'axios';
 
 const refs = {
   selectCheck: document.querySelector('.breed-select'),
-  loadingData: document.querySelector('.loader'),
+  loadingData: document.querySelector('.p-loader'),
   errData: document.querySelector('.error'),
   container: document.querySelector('.cat-info'),
 };
+
+// new SlimSelect({
+//   select: refs.selectCheck,
+// });
 
 refs.selectCheck.addEventListener('change', onChange);
 
@@ -35,7 +41,7 @@ function onChange(evt) {
 
 funFetchBreeds()
   .then(dataImg => {
-    console.log('qwerw');
+    console.log('qwer');
     // dataImg = data.filter(img => img.image?.url != null);
     for (let i = 0; i < dataImg.length; i++) {
       const breed = dataImg[i];
