@@ -24,7 +24,7 @@ function onChange(evt) {
       console.log(data);
       refs.container.innerHTML = createMarkup(data);
     })
-    .catch(error => refs.errData.classList.remove('display-none'))
+    .catch(_error => refs.errData.classList.remove('display-none'))
     .finally(() => {
       refs.loadingData.classList.add('display-none');
       refs.selectCheck.classList.remove('display-none');
@@ -33,21 +33,21 @@ function onChange(evt) {
 }
 
 funFetchBreeds()
-  .then(data => {
-    console.log('qwer');
-    dataImg = data.filter(img => img.image?.url != null);
+  .then(dataImg => {
+    console.log('qwera');
+    // dataImg = data.filter(img => img.image?.url != null);
     for (let i = 0; i < dataImg.length; i++) {
       const breed = dataImg[i];
       let option = document.createElement('option');
-      if (!breed.image) {
-        continue;
-      }
+      // if (!breed.image) {
+      //   continue;
+      // }
       option.value = breed.id;
-      option.innerHTML = breed.name;
+      option.textContent = breed.name;
       refs.selectCheck.append(option);
     }
   })
-  .catch(error => refs.errData.classList.remove('display-none'));
+  .catch(_error => refs.errData.classList.remove('display-none'));
 
 function createMarkup(arr) {
   const breeds = arr[0].breeds;
