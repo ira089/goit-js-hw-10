@@ -1,6 +1,7 @@
 import { funFetchBreeds } from './cat-api';
 import { funFetchCatByBreed } from './cat-api';
-import axios from 'axios';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+// import axios from 'axios';
 
 const refs = {
   selectCheck: document.querySelector('.breed-select'),
@@ -24,7 +25,7 @@ function onChange(evt) {
       console.log(data);
       refs.container.innerHTML = createMarkup(data);
     })
-    .catch(_error => refs.errData.classList.remove('display-none'))
+    .catch(_error => Notify.failure(refs.errData.textContent))
     .finally(() => {
       refs.loadingData.classList.add('display-none');
       refs.selectCheck.classList.remove('display-none');
@@ -34,7 +35,7 @@ function onChange(evt) {
 
 funFetchBreeds()
   .then(dataImg => {
-    console.log('qwera');
+    console.log('qwerw');
     // dataImg = data.filter(img => img.image?.url != null);
     for (let i = 0; i < dataImg.length; i++) {
       const breed = dataImg[i];
@@ -47,7 +48,10 @@ funFetchBreeds()
       refs.selectCheck.append(option);
     }
   })
-  .catch(_error => refs.errData.classList.remove('display-none'));
+  .catch(_error =>
+    // refs.errData.classList.remove('display-none');
+    Notify.failure(refs.errData.textContent)
+  );
 
 function createMarkup(arr) {
   const breeds = arr[0].breeds;
