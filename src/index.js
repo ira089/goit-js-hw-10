@@ -2,6 +2,7 @@ import { funFetchBreeds } from './cat-api';
 import { funFetchCatByBreed } from './cat-api';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 // import SlimSelect from 'slim-select';
+// import 'slim-select/dist/slimselect.css';
 
 // import axios from 'axios';
 
@@ -11,10 +12,6 @@ const refs = {
   errData: document.querySelector('.error'),
   container: document.querySelector('.cat-info'),
 };
-
-// new SlimSelect({
-//   select: refs.selectCheck,
-// });
 
 refs.selectCheck.addEventListener('change', onChange);
 
@@ -28,7 +25,7 @@ function onChange(evt) {
 
   funFetchCatByBreed(selectedId)
     .then(data => {
-      console.log(data);
+      // console.log(data);
       refs.container.innerHTML = createMarkup(data);
     })
     .catch(_error => Notify.failure(refs.errData.textContent))
@@ -41,7 +38,6 @@ function onChange(evt) {
 
 funFetchBreeds()
   .then(dataImg => {
-    console.log('qwer');
     // dataImg = data.filter(img => img.image?.url != null);
     for (let i = 0; i < dataImg.length; i++) {
       const breed = dataImg[i];
@@ -53,6 +49,9 @@ funFetchBreeds()
       option.textContent = breed.name;
       refs.selectCheck.append(option);
     }
+    // new SlimSelect({
+    //   select: refs.selectCheck,
+    // });
   })
   .catch(_error =>
     // refs.errData.classList.remove('display-none');
