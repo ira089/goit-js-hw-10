@@ -15,27 +15,6 @@ const refs = {
 
 refs.selectCheck.addEventListener('change', onChange);
 
-function onChange(evt) {
-  refs.loadingData.classList.remove('display-none');
-  refs.selectCheck.classList.add('display-none');
-  refs.container.classList.add('display-none');
-
-  const selectedId = evt.currentTarget.value;
-  // console.log(selectedId);
-
-  funFetchCatByBreed(selectedId)
-    .then(data => {
-      // console.log(data);
-      refs.container.innerHTML = createMarkup(data);
-    })
-    .catch(_error => Notify.failure(refs.errData.textContent))
-    .finally(() => {
-      refs.loadingData.classList.add('display-none');
-      refs.selectCheck.classList.remove('display-none');
-      refs.container.classList.remove('display-none');
-    });
-}
-
 funFetchBreeds()
   .then(dataImg => {
     // dataImg = data.filter(img => img.image?.url != null);
@@ -53,10 +32,33 @@ funFetchBreeds()
     //   select: refs.selectCheck,
     // });
   })
-  .catch(_error =>
-    // refs.errData.classList.remove('display-none');
-    Notify.failure(refs.errData.textContent)
-  );
+  .catch(_error => Notify.failure(refs.errData.textContent))
+  .finally(() => {
+    refs.loadingData.classList.add('display-none');
+    refs.selectCheck.classList.remove('display-none');
+  });
+
+function onChange(evt) {
+  refs.container.innerHTML = '';
+  refs.loadingData.classList.remove('display-none');
+  refs.selectCheck.classList.remove('display-none');
+  refs.container.classList.add('display-none');
+
+  const selectedId = evt.currentTarget.value;
+  // console.log(selectedId);
+
+  funFetchCatByBreed(selectedId)
+    .then(data => {
+      // console.log(data);
+      refs.container.innerHTML = createMarkup(data);
+    })
+    .catch(_error => Notify.failure(refs.errData.textContent))
+    .finally(() => {
+      refs.loadingData.classList.add('display-none');
+      refs.selectCheck.classList.remove('display-none');
+      refs.container.classList.remove('display-none');
+    });
+}
 
 function createMarkup(arr) {
   const breeds = arr[0].breeds;
